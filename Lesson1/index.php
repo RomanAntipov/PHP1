@@ -1,4 +1,5 @@
 ﻿<?php
+
 $header1 = '&#9749; Онлайн-турбюро "Диван Трэвел"';
 echo "<!DOCTYPE html>
 <html lang="en">
