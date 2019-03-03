@@ -1,0 +1,376 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: #ccc;
+    font-family: Verdana, sans-serif;
+    color: #445161;
+}
+
+h2 {
+    margin: 0 0 30px;
+    font-size: 40px;
+}
+
+.container {
+    max-width: 1280px;
+    margin: auto;
+}
+
+.headercl {
+    background-color: #445161;
+    padding: 50px;
+/*    display: block;*/
+    overflow: hidden;
+    color: white;
+}
+
+.headercl h1 {
+    float: left;
+    font-size: 55px;
+    margin: 0 0 30px;
+    overflow: hidden;
+    width: 55%;
+}
+
+.headerImage {
+    width: 40%;
+    float: right;
+}
+
+.headercl ul {
+    float: left;
+    font-size: 25px;
+    line-height: 36px;
+    display: block;
+    width: 55%;
+    margin: 0;
+}
+
+/*  Второй способ "растянуть" блок Header под размер содержимого с Float. 
+.headercl:after {
+    content: '';
+    clear: both;
+    display: block;
+}*/
+
+.about {
+    padding: 50px;
+    overflow: hidden;
+}
+
+.about h2 {
+    float: left;
+}
+
+.aboutImg {
+    float: right;
+    width: 40%;
+}
+
+.about p {
+    font-size: 30px;
+    float: left;
+/*    display: block;*/
+    width: 55%;
+    margin: 0;
+}
+
+.pluses {
+    padding: 50px;
+    overflow: hidden;
+    background-color: white;
+}
+
+.pluses h2, .screenshots h2, .reviews h2, footer h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.pluses ul {
+    font-size: 20px;
+    overflow: hidden;
+    padding-left: 0;
+}
+
+.pluses ul li {
+    width: calc(50% - 10px);
+    margin-top: 35px;
+    list-style-type: none;
+    background: url(../img/plus_icon.gif) no-repeat left 0;
+    padding-left: 40px;
+/*    text-align: justify;*/
+    box-sizing: border-box;
+    float: left;
+    overflow: hidden;
+}
+
+.pluses ul li:nth-child(-n+2) {
+    margin-top: 0;
+}
+
+.pluses ul li:nth-child(odd) {
+/*    float: left;*/
+    margin-right: 10px;
+}
+
+.pluses ul li:nth-child(even) {
+/*    float: right;*/
+    margin-left: 10px;
+}
+
+.audio {
+    width: 100%;
+    margin-top: 20px;
+    color: cornsilk;
+}
+
+.screenshots {
+    padding: 50px;
+    overflow: hidden;
+}
+
+.screenshotsArt {
+    width: calc(50% - 10px);
+    margin-top: 35px;
+    text-align: justify;
+    box-sizing: border-box;
+    float: left;
+    font-size: 24px;
+}
+
+.screenshotsArt:nth-child(odd) {
+    margin-left: 10px;
+}
+
+.screenshotsArt:nth-child(even) {
+    margin-right: 10px;
+}
+    
+.screenshotsArt img {
+    float: left;
+    width: 40%;
+    margin-right: 20px;
+}
+
+.screenshotsArt h3 {
+    display: block;
+    font-size: 24px;
+    margin: 0 0 30px 20px;
+}
+
+.reviews {
+    padding: 50px;
+    background-color: white;
+    overflow: hidden;
+    background: url(../img/full_bg.jpg) right no-repeat;
+    background-size: cover;
+}
+
+.reviewItem {
+    width: calc(50% - 10px);
+    margin-bottom: 35px;
+    text-align: justify;
+    box-sizing: border-box;
+    float: left;
+}
+
+.reviewItem:nth-child(odd) {
+    margin-left: 10px;
+}
+
+.reviewItem:nth-child(even) {
+    margin-right: 10px;
+}
+
+.quote {
+    font-size: 14px;
+    font-style: italic;
+}
+
+.reviewItem img {
+    float: left;
+    width: 100px;
+    border-radius: 50px;
+    overflow: hidden;
+    margin-right: 20px;
+}
+
+.quote span {
+    margin-top: 10px;
+    color: black;
+}
+
+.output {
+    height: 70px;
+    width: 80%;
+    border: 2px solid black;
+    border-radius: 10px;
+    background: white;
+    color: black;
+    font-size: 50px;
+    text-align: right;
+    margin: auto;
+    padding: 10px;
+}
+
+.quotas {
+    color: black;
+    font-size: 18px;
+    text-align: left;
+    margin: auto;
+    padding: 10px;
+}
+
+footer {
+    background-color: #445161;
+    padding: 50px;
+    overflow: hidden;
+    color: white;
+
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.grid div {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+
+        /*
+
+        Настройки для экранов шириной 520 пикселей и меньше.
+        */
+
+@media (max-width: 520px) {
+    
+    .container {
+        width: 100%;
+    }
+    
+    .headercl h1 {
+        float: none;
+        width: 85%;
+        text-align: center;
+        margin: 0 auto 20px auto;
+    }
+    
+    .headerImage {
+        width: 100%;
+        float: none;
+    }
+
+    .headercl ul {
+        float: none;
+        line-height: 25px;
+        display: block;
+        width: 90%;
+        margin: 0 auto 20px auto;
+    }
+    
+    .about h2 {
+        float: none;
+    }
+
+    .aboutImg {
+        float: none;
+        width: 100%;
+    }
+
+    .about p {
+        font-size: 30px;
+        float: none;
+        width: 100%;
+        margin: 20px auto 20px auto;
+    }
+    
+    .pluses ul li {
+        width: 100%;
+        list-style-type: none;
+        background: url(../img/plus_icon.gif) no-repeat left 0;
+        padding-left: 40px;
+        text-align: justify;
+        box-sizing: border-box;
+        float: none;
+    }
+
+    .pluses ul li:nth-child(odd) {
+        margin: 20px auto 20px auto;
+    }
+
+    .pluses ul li:nth-child(even) {
+        margin: 20px auto 20px auto;
+    }
+
+    .screenshots {
+        padding: 10px;
+        overflow: hidden;
+    }
+
+    .screenshotsArt {
+        width: calc(100% - 10px);
+        margin-top: 35px;
+        text-align: justify;
+        box-sizing: border-box;
+        font-size: 18px;
+        float: none;
+    }
+
+    .screenshotsArt:nth-child(odd) {
+        margin: auto;
+    }
+
+    .screenshotsArt:nth-child(even) {
+        margin: auto;
+    }
+
+    .screenshotsArt img {
+        float: left;
+        width: 100%;
+        margin: 0 auto 10px auto;
+    }
+
+    .screenshotsArt h3 {
+        display: block;
+        font-size: 18px;
+        margin: auto;
+    }
+    
+    .reviews {
+        padding: 10px;
+    }
+
+    .reviewItem {
+        width: 100%;
+        margin-bottom: 25px;
+        text-align: justify;
+        box-sizing: border-box;
+        float: none;
+        
+    }
+
+    .reviewItem:nth-child(odd) {
+        margin: 0 auto 20px auto;
+    }
+
+    .reviewItem:nth-child(even) {
+        margin: 0 auto 20px auto;
+    }
+
+    .reviewItem img {
+        float: left;
+        width: 100px;
+        border-radius: 50px;
+        overflow: hidden;
+        margin-right: 15px;
+    }
+
+    .quote span {
+        margin-top: 10px;
+        color: black;
+    }
+
+}
