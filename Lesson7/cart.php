@@ -21,6 +21,7 @@ while ($row = mysqli_fetch_assoc($allprod)) {
 
 $prodtags = '';
 $prodtable = [];
+var_dump($_SESSION);
 foreach ($products as $item) {
     // тест - проверяем, как функция перебирает значения в массиве. В продуктовой версии строчку закомментировать.
     // echo 'Ключ: '.$id.', имя файла: '.$item['id'].'<br/>'.$item['product_name'].'<br/>'.$item['prod_image'].'<br/>';
@@ -28,12 +29,15 @@ foreach ($products as $item) {
     $prodname = $item['product_name'];
     $id = $item['id'];
     if (!isset($_SESSION[$id])) $_SESSION[$id] = 0;
+    // var_dump($_SESSION[$id]);
+    // echo '<br>';
     $currentitem = '<div><img src="'.$item['prod_image'].'" alt="'.$prodname.'" title="'.$prodname.'"><br><h2>'.$prodname.'</h2><p>Price: $'.$item['price'].'</p><p><form method="get"><input type="number" name="'.$id.'" class="input"><button type="submit">Купить</button></form></p></div>';
     $prodtags .= $currentitem;
     $prodtable [$id] = ['prodname' => $prodname, 'price' => $item['price']];  // формируем двумерный массив, в котором ключи ячеек равны id, вложенные массивы содержат инфо о наименовании и цене товара.
 };
 
 // var_dump($prodtable);
+var_dump($_SESSION);
 
 mysqli_close($link);
 
