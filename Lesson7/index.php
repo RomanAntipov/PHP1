@@ -1,6 +1,7 @@
 <?php
     session_start();
-    header('location: /PHP/header.php');
-    echo 'Жопа!';
+    include 'mkprlist.php';
     include 'cart.php';
-
+    include 'header.php';
+    include 'mksess.php';
+?>

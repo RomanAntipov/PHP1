@@ -1,8 +1,3 @@
-<?php
-    session_start();
-    include 'cart.php';
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,10 +66,32 @@
 
 <div>
     <div id="cart">  
-
+        <?php
+            // var_dump($_SESSION);
+            if (count($_SESSION) > 0)
+                foreach ($_SESSION as $id => $count) {
+                    if ($count > 0)        
+                    echo $id.' - '.$products[$id]['product_name'].' - количество:'.$count.' шт., цена: '.$products[$id]['price'].', сумма: '.$products[$id]['price']*$count;
+                    };
+        ?>
     </div>
     <div id="catalog" class="catCl">
-        <?=$prodtags?>
+    <?php
+        foreach ($products as $id => $item) {
+            $prodname = $item['product_name'];?>
+            <div>
+                <img src="<?=$item['prod_image']?>" alt="<?=$prodname?>" title="<?=$prodname?>"><br>
+                <h2><?=$prodname?></h2>
+                <p>Price: $<?=$item['price']?></p>
+                <p>
+                    <form method="get">
+                        <input type="number" name="<?=$id?>" class="input">
+                        <button type="submit">Купить</button>
+                    </form>
+                </p>
+            </div> <?
+        };
+    ?>
     </div>
 </div>
 </body>
