@@ -1,0 +1,47 @@
+CREATE TABLE `mygallery`.`images` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `filename` VARCHAR(15) NOT NULL,
+  `viewcounter` MEDIUMINT UNSIGNED NOT NULL DEFAULT 0,
+  `imagename` VARCHAR(45) NULL,
+  `imagesize` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+
+INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/01.jpg', '253', 'Домик на острове', '1024x768');
+INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/02.jpg', '115', 'Церквушка и барак', '1280x800');
+INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/03.jpg', '119', 'Воздушный шар', '1024x768');
+INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/04.jpg', '123', 'Лодка', '1280x800');
+INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/05.jpg', '127', 'Маки', '1024x768');
+INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/06.jpg', '131', 'Закат', '1280x800');
+INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/07.jpg', '135', 'Горный пейзаж', '1024x768');
+INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/08.jpg', '139', 'Туман', '1280x800');
+INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/09.jpg', '143', 'Водопад', '1024x768');
+INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/10.jpg', '147', 'Северное сияние', '1280x800');
+INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/11.jpg', '151', '', '1024x768');
+INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/12.jpg', '155', 'Косарь', '1280x800');
+INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/13.jpg', '159', '', '1024x768');
+INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/14.jpg', '163', '', '1280x800');
+INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/15.jpg', '167', '', '1024x768');
+INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/16.jpg', '171', '', '1280x800');
+INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/17.jpg', '175', '', '1024x768');
+INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/18.jpg', '179', '', '1280x800');
+
+INSERT INTO quotas.quotas (`username`, `quotatext`) VALUES ('Роман', 'Тест');
+"SELECT * FROM quotas.quotas;"
+
+
+CREATE TABLE `webshop`.`products` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `product_name` VARCHAR(45) NOT NULL,
+  `prod_image` VARCHAR(45) NOT NULL,
+  `price` DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+var product = ['Portable radio','Sport shoes','Battery light','Watches'];
+var price = [50,65,10,33];
+var productImage = ['img/radio.jpg','img/shoes.jpg','img/light.jpg','img/watches.jpg'];
