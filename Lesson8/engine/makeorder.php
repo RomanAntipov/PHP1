@@ -4,6 +4,6 @@
     include 'cart.php';
 
 // var_dump($cart);
-makeOrder($cart, $_SESSION['username'], 'testPhone', 'testAddress');
+makeOrder($cart, $_SESSION['username'], 'testPhone', 'testAddress', $mysql);
 $_SESSION['cart'] = [];
-header ('location: ..\index.php');
+header ('location: ../index.php');

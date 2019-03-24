@@ -1,5 +1,5 @@
 <?php
-	include 'engine\connect.php';
+	include 'engine/db.php';
 	session_start();
 	$login = '';
 	$password = '';
@@ -12,7 +12,7 @@
 	// var_dump($login);
 	// var_dump($password);
 
-	$user = getUser($login);
+	$user = getUser($login, $mysql);
 	// var_dump($user);
 	if ($user) {
 		// var_dump(password_verify('1234', $user['password']));

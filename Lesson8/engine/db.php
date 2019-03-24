@@ -1,7 +1,24 @@
 <?php
-	function makePrList() {
-		$link = mysqli_connect('localhost:3307', 'root', '', 'webshop');
-		$allprod = mysqli_query($link, "SELECT * FROM webshop.products;");
+	include 'config.php';
+
+	$mysql = $sqlconf;
+
+	function getUser($login, $sqlconf) {
+
+	    $link = mysqli_connect(	$sqlconf['host'], $sqlconf['user'], $sqlconf['pass'], $sqlconf['dbname']);
+	    $query = sprintf('SELECT * FROM users WHERE login="%s" LIMIT 1', $login);
+	    $mysql_query = mysqli_query($link, $query);
+	    $user = NULL;
+	    while ($row = mysqli_fetch_assoc($mysql_query)) {
+	        $user[] = $row;
+	    }
+	    mysqli_close($link);
+	    return $user[0];
+	};
+
+	function makePrList($sqlconf) {
+		$link = mysqli_connect(	$sqlconf['host'], $sqlconf['user'], $sqlconf['pass'], $sqlconf['dbname']);
+		$allprod = mysqli_query($link, "SELECT * FROM products");
 		// var_dump($products);
 
 		$products = [];
@@ -16,14 +33,16 @@
 		return $products;
 	};
 
-	function makeOrder($goods, $userName, $phone, $address) {
-		$link = mysqli_connect('localhost:3307', 'root', '', 'webshop');
+	function makeOrder($goods, $userName, $phone, $address, $sqlconf) {
+		$link = mysqli_connect(	$sqlconf['host'], $sqlconf['user'], $sqlconf['pass'], $sqlconf['dbname']);
 
 		// данным запросом создаём в таблице orders базы данных строчку с параметрами конкретного заказа.
 		// ВАЖНО!!! В таблице содержится только номер заказа, имя пользователя, телефон и адрес.
 		// Информация о заказанных товарах, их количестве будет храниться в отдельной таблице order_products!
 		
-		$queryOrder = sprintf('INSERT INTO webshop.orders (`User`, `phone`, `address`) VALUES ("%s", "%s", "%s")', $userName, $phone, $address);
+		// var_dump($link);
+
+		$queryOrder = sprintf('INSERT INTO orders (`User`, `phone`, `address`) VALUES ("%s", "%s", "%s")', $userName, $phone, $address);
 		// var_dump($queryOrder);
 
 		$mysql_queryOrder = mysqli_query($link, $queryOrder);
@@ -34,7 +53,7 @@
 		// соответствующие строчки в таблице order_products
 
 		if ($mysql_queryOrder) {
-			$queryOrderNum = sprintf('SELECT max(id) as lastorder FROM webshop.orders WHERE user = "%s"', $userName);
+			$queryOrderNum = sprintf('SELECT max(id) as lastorder FROM orders WHERE user = "%s"', $userName);
 			$mysql_getOrderNum = mysqli_query($link, $queryOrderNum);
 			// var_dump(mysqli_fetch_assoc($mysql_getOrderNum)["lastorder"]);
 			$lastOrderNum = (int)mysqli_fetch_assoc($mysql_getOrderNum)["lastorder"];
@@ -46,7 +65,7 @@
 			// третья - количество. Номера заказа могут повторяться столько раз, сколько уникальных товаров в заказе!
 
 			foreach ($goods as $id => $count) {
-				$queryOrderProd = sprintf('INSERT INTO webshop.order_products (`order_id`, `product_id`, `count`) VALUES ("%s", "%s", "%s")', $lastOrderNum, $id, $count);
+				$queryOrderProd = sprintf('INSERT INTO order_products (`order_id`, `product_id`, `count`) VALUES ("%s", "%s", "%s")', $lastOrderNum, $id, $count);
 				// var_dump($queryOrderProd);
 				$mysql_OrderProd =  mysqli_query($link, $queryOrderProd);
 			};
@@ -54,15 +73,15 @@
 		mysqli_close($link);
 	};
 
-	function getAllOrders($userName) {
-		$link = mysqli_connect('localhost:3307', 'root', '', 'webshop');
+	function getAllOrders($userName, $sqlconf) {
+		$link = mysqli_connect(	$sqlconf['host'], $sqlconf['user'], $sqlconf['pass'], $sqlconf['dbname']);
 
 		// проверяем имя пользователя. Если пользователь - admin - то выгрузим все заказы из БД. 
 		// Иначе выводим информацию только о заказах конкретного пользователя.
 
 		if ($userName == 'admin')
-			$query = sprintf('SELECT * FROM webshop.orders');
-		else $query = sprintf('SELECT * FROM webshop.orders WHERE User = "%s"',$userName);
+			$query = sprintf('SELECT * FROM orders');
+		else $query = sprintf('SELECT * FROM orders WHERE User = "%s"',$userName);
 		// var_dump($query);
 		$allOrdersDB = mysqli_query($link, $query);	
 		
@@ -72,7 +91,7 @@
 
 			// формируем двумерный массив, в котором ключи ячеек равны id заказа, вложенные массивы содержат инфо 
 			// о имени пользователя, контактных данных, и дате-времени заказа
-		    $allOrders[$row['id']] = ['userName' => $row['User'], 'dateTime' => $row['datetime'], 'phone' => $row['phone'], 'address' => $row['address'], 'orderProducts' => getOrder_Products($link, $row['id'])];
+		    $allOrders[$row['id']] = ['userName' => $row['User'], 'dateTime' => $row['datetime'], 'phone' => $row['phone'], 'address' => $row['address'], 'orderProducts' => getOrder_Products($link, $row['id'], $link)];
 		};
 		// проверяем, что функция отработала и массив сформирован, в продуктовой версии данную строчку закомментировать.
 		// var_dump($allOrders);
@@ -80,9 +99,9 @@
 		return $allOrders;
 		};
 
-	function getOrder_Products($link, $orderId) {
+	function getOrder_Products($link, $orderId, $link) {
 		$query = sprintf('
-			SELECT product_id, product_name, price, count, price*count as totalprice FROM webshop.order_products
+			SELECT product_id, product_name, price, count, price*count as totalprice FROM order_products
 	    		INNER JOIN products ON product_id = products.id
 	    		INNER JOIN orders ON order_id = orders.id
 	    		WHERE order_id = %s
@@ -104,35 +123,36 @@
 		return $allOP;
 	};
 
-	function killOrderProduct($orderId, $productId) {
-		$link = mysqli_connect('localhost:3307', 'root', '', 'webshop');
-
+	function killOrderProduct($orderId, $productId, $sqlconf) {
+		$link = mysqli_connect($sqlconf['host'], $sqlconf['user'], $sqlconf['pass'], $sqlconf['dbname']);
+		// var_dump($link);
 		// запрос на удаление строки из таблицы order_products.
 
 		if ($productId == 'all') $productQuery = '';
-		else $productQuery = sprintf(' and (`product_id` = "%s")', $productId);
+		else $productQuery = sprintf(' and (product_id = "%s")', $productId);
 		
-		$query = sprintf('DELETE FROM `webshop`.`order_products` WHERE (`order_id` = "%s")%s', $orderId, $productQuery);
+		$query = sprintf('DELETE FROM order_products WHERE (order_id = "%s")%s', $orderId, $productQuery);
+
 		$killOrderProduct = mysqli_query($link, $query);
 
 		if ($productId == 'all') {
-			$OrderQuery = sprintf('DELETE FROM `webshop`.`orders` WHERE (`id` = "%s")', $orderId);
+			$OrderQuery = sprintf('DELETE FROM orders WHERE (id = "%s")', $orderId);
 			$killOrder = mysqli_query($link, $OrderQuery);
 		};
 		mysqli_close($link);
 	};
 
-	function addNewProduct($productName, $price, $image) {
-		$link = mysqli_connect('localhost:3307', 'root', '', 'webshop');
+	function addNewProduct($productName, $price, $image, $sqlconf) {
+		$link = mysqli_connect(	$sqlconf['host'], $sqlconf['user'], $sqlconf['pass'], $sqlconf['dbname']);
 		// запрос на добавление в таблицу products строки с новым товаром (наименование товара, файл с изображением, цена).
-		$query = sprintf('INSERT INTO `webshop`.`products` (`product_name`, `prod_image`, `price`) VALUES ("%s", "%s", "%s")', $productName, $image, $price);
+		$query = sprintf('INSERT INTO products (product_name, prod_image, price) VALUES ("%s", "%s", "%s")', $productName, $image, $price);
 		$addProduct = mysqli_query($link, $query);
 		mysqli_close($link);
 	};
 
-	function killProduct($productId) {
-		$link = mysqli_connect('localhost:3307', 'root', '', 'webshop');
-		$query = sprintf('DELETE FROM `webshop`.`products` WHERE (`id` = "%s")', $productId);
+	function killProduct($productId, $sqlconf) {
+		$link = mysqli_connect(	$sqlconf['host'], $sqlconf['user'], $sqlconf['pass'], $sqlconf['dbname']);
+		$query = sprintf('DELETE FROM products WHERE (id = "%s")', $productId);
 		$kill = mysqli_query($link, $query);
 		mysqli_close($link);
 	};
