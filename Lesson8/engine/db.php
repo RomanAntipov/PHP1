@@ -119,4 +119,20 @@
 			$OrderQuery = sprintf('DELETE FROM `webshop`.`orders` WHERE (`id` = "%s")', $orderId);
 			$killOrder = mysqli_query($link, $OrderQuery);
 		};
+		mysqli_close($link);
+	};
+
+	function addNewProduct($productName, $price, $image) {
+		$link = mysqli_connect('localhost:3307', 'root', '', 'webshop');
+		// запрос на добавление в таблицу products строки с новым товаром (наименование товара, файл с изображением, цена).
+		$query = sprintf('INSERT INTO `webshop`.`products` (`product_name`, `prod_image`, `price`) VALUES ("%s", "%s", "%s")', $productName, $image, $price);
+		$addProduct = mysqli_query($link, $query);
+		mysqli_close($link);
+	};
+
+	function killProduct($productId) {
+		$link = mysqli_connect('localhost:3307', 'root', '', 'webshop');
+		$query = sprintf('DELETE FROM `webshop`.`products` WHERE (`id` = "%s")', $productId);
+		$kill = mysqli_query($link, $query);
+		mysqli_close($link);
 	};

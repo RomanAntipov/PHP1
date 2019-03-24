@@ -75,6 +75,8 @@
         if ($_SESSION['auth']) echo $_SESSION['username'];
         ?>
         <a href="login.php">вход</a>
+        <br>
+        <a href="administration.php">Управление</a>
     </div>
     <div id="cart">  
         <table border="1" cellpadding="7" cellspacing="0">

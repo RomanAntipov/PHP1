@@ -29,4 +29,19 @@ INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `image
 INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/17.jpg', '175', '', '1024x768');
 INSERT INTO `mygallery`.`images` (`filename`, `viewcounter`, `imagename`, `imagesize`) VALUES ('big/18.jpg', '179', '', '1280x800');
 
+INSERT INTO quotas.quotas (`username`, `quotatext`) VALUES ('Роман', 'Тест');
+"SELECT * FROM quotas.quotas;"
 
+
+CREATE TABLE `webshop`.`products` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `product_name` VARCHAR(45) NOT NULL,
+  `prod_image` VARCHAR(45) NOT NULL,
+  `price` DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+var product = ['Portable radio','Sport shoes','Battery light','Watches'];
+var price = [50,65,10,33];
+var productImage = ['img/radio.jpg','img/shoes.jpg','img/light.jpg','img/watches.jpg'];

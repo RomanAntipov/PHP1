@@ -80,6 +80,13 @@
         
         ?>
         <a href="login.php">вход</a>
+        <br>
+        <a href="index.php">Главная страница</a>
+        <?
+        if ($_SESSION['auth'] && $_SESSION['username'] == 'admin'):?>
+        <br>
+        <a href="products.php">Управление товарами</a>
+        <?endif;?>
         <!-- <? var_dump($ordersList)?> -->
     </div>
     <h2>
